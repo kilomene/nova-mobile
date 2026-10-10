@@ -42,29 +42,33 @@ jobs:
           cp -r /tmp/godot-templates/templates/* ~/.local/share/godot/export_templates/4.3.stable/
           ls ~/.local/share/godot/export_templates/4.3.stable/ | head
 
+      - name: Create debug keystore and point the preset at it
+        run: |
+          keytool -genkey -keystore "$GITHUB_WORKSPACE/debug.keystore" -alias androiddebugkey \
+            -storepass android -keypass android -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+          cd godot
+          sed -i "s|^keystore/debug=.*|keystore/debug=\"$GITHUB_WORKSPACE/debug.keystore\"|" export_presets.cfg
+          sed -i "s|^keystore/release=.*|keystore/release=\"$GITHUB_WORKSPACE/debug.keystore\"|" export_presets.cfg
+          grep -E "^keystore/(debug|release)=" export_presets.cfg
+
       - name: Export debug APK
         run: |
           cd godot
           ../Godot_v4.3-stable_linux.x86_64 --headless --path . --export-debug "Android" ../nova-mobile-debug.apk
           ls -la ../nova-mobile-debug.apk
 
-      - name: Sign APK
+      - name: Verify APK signature
         run: |
           SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
           BUILD_TOOLS="$(ls -d "$SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
           echo "build-tools: $BUILD_TOOLS"
-          keytool -genkey -keystore debug.keystore -alias androiddebugkey \
-            -storepass android -keypass android -keyalg RSA -keysize 2048 -validity 10000 \
-            -dname "CN=Android Debug,O=Android,C=US"
-          "$BUILD_TOOLS/zipalign" -f 4 nova-mobile-debug.apk nova-mobile-aligned.apk
-          "$BUILD_TOOLS/apksigner" sign --ks debug.keystore --ks-pass:android \
-            --key-pass:android --out nova-mobile.apk nova-mobile-aligned.apk
-          "$BUILD_TOOLS/apksigner" verify nova-mobile.apk && echo "APK SIGNED OK"
-          ls -la nova-mobile.apk
+          "$BUILD_TOOLS/apksigner" verify --print-certs nova-mobile-debug.apk | head -8
+          ls -la nova-mobile-debug.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: nova-mobile-debug-apk
-          path: nova-mobile.apk
+          path: nova-mobile-debug.apk
           if-no-files-found: error
