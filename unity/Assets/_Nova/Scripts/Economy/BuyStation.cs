@@ -294,7 +294,7 @@ namespace NovaMobile.Economy
             bgGo.transform.SetParent(go.transform, false);
             var bgImg = bgGo.AddComponent<Image>();
            
-...[truncated 8085 chars]            bgImg.color = new Color(0.02f, 0.03f, 0.04f, 0.96f);
+            bgImg.color = new Color(0.02f, 0.03f, 0.04f, 0.96f);
             var brt = bgGo.GetComponent<RectTransform>();
             brt.anchorMin = Vector2.zero; brt.anchorMax = Vector2.one;
             brt.offsetMin = Vector2.zero; brt.offsetMax = Vector2.zero;
