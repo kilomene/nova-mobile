@@ -1,0 +1,40 @@
+# NOVA Mobile — one-time Unity license step (Zenas's step)
+#
+# WHAT IT DOES
+#   Mints a manual activation file (.alf) INSIDE GitHub Actions and uploads it
+#   as a downloadable artifact. Zenas converts it to a license file (.ulf) at
+#   https://license.unity3d.com/manual and stores it as the UNITY_LICENSE
+#   repo secret. One-time; the build workflow goes green after that.
+#
+# WHY IT MUST RUN IN CI (do not generate the .alf on a local machine)
+#   The .alf binds to the machine's hardware ID, and all GitHub-hosted runners
+#   report the same hardware ID. A CI-minted .alf therefore produces a .ulf
+#   that works on every future build. A .alf minted on a desktop binds to that
+#   desktop and its .ulf FAILS in CI with a machine-binding mismatch.
+#
+# RUNS ONLY ON MANUAL DISPATCH — never on push. Deploy path on GitHub:
+# .github/workflows/generate-unity-alf.yml (see gh-push-unity-nova-mobile.py).
+#
+# STRICT RULE: nobody builds the APK locally. GitHub Actions builds it.
+
+name: Acquire Unity activation file (.alf)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  activation:
+    name: Request manual activation file
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request manual activation file
+        id: getManualLicenseFile
+        uses: game-ci/unity-request-activation-file@v2
+        with:
+          unityVersion: 6000.0.23f1
+
+      - name: Expose as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: unity-activation-file
+          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
