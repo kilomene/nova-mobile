@@ -50,10 +50,10 @@ jobs:
           unityVersion: 6000.0.23f1
           projectPath: unity
           targetPlatform: Android
-          androidAppBundle: false
+          androidExportType: androidPackage
           androidVersionCode: 1
           buildName: nova-mobile-unity
-          buildPath: build/Android
+          buildsPath: build/Android
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
