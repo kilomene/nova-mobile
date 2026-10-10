@@ -242,7 +242,7 @@ namespace NovaMobile.World
             for (int i = 0; i < 6; i++)
                 RegionKit.Car(ctx, new Vector3(-55f + i * 22f, 0.06f, 12f + (i % 2 == 0 ? 3.5f : -3.5f)),
                     i % 2 == 0 ? 90f : -90f, ctx.Pick(new[] {
-                        Color.white, Color.black, new Color(0.7f, 0.1f, 0.1f), new Color(0.1, 0.2, 0.5f) }));
+                        Color.white, Color.black, new Color(0.7f, 0.1f, 0.1f), new Color(0.1f, 0.2f, 0.5f) }));
             for (int i = 0; i < 10; i++)
                 RegionKit.Palm(ctx, ctx.RfRange(-64f, 64f), ctx.RfRange(24f, 60f));
 
@@ -838,14 +838,14 @@ namespace NovaMobile.World
                     36f, 4f, 0.3f, holes, ctx.Mats.Wall, col);
                 BuildingFactory.WindowWall(ctx.Batch, frame * Matrix4x4.TRS(
                     new Vector3(0f, 4f, 9f), Quaternion.identity, Vector3.one),
-                    36f, 3.4f, 0.3f, ctx.Mats.WallGlass, Color.white, ctx.Mats);
+                    36f, 3.4f, 0.3f, ctx.Mats.GlassDark, Color.white, ctx.Mats);
                 BuildingFactory.WindowWall(ctx.Batch, frame * Matrix4x4.TRS(
                     new Vector3(0f, 0f, -9f), Quaternion.identity, Vector3.one),
                     36f, 4f, 0.3f, ctx.Mats.Wall, col, ctx.Mats);
                 BuildingFactory.Slab(ctx.Batch, frame, 36f, 18f, 4.1f, ctx.Mats.Concrete);
                 BuildingFactory.WindowWall(ctx.Batch, frame * Matrix4x4.TRS(
                     new Vector3(0f, 4.1f, -9f), Quaternion.identity, Vector3.one),
-                    36f, 3.4f, 0.3f, ctx.Mats.WallGlass, Color.white, ctx.Mats);
+                    36f, 3.4f, 0.3f, ctx.Mats.GlassDark, Color.white, ctx.Mats);
                 BuildingFactory.Slab(ctx.Batch, frame, 36f, 18f, 7.6f, ctx.Mats.Concrete);
                 ctx.Batch.Box(new Vector3(37f, 0.3f, 19f),
                     frame * Matrix4x4.TRS(new Vector3(0f, 7.8f, 0f), Quaternion.identity, Vector3.one),

@@ -410,7 +410,7 @@ namespace NovaMobile.Classes
             var shape = ps.shape;
             shape.radius = radius * 0.45f;
             main.startSize = new ParticleSystem.MinMaxCurve(radius * 0.35f, radius * 0.7f);
-            main.startColor = new ParticleSystem.MinMaxColor(color);
+            main.startColor = new ParticleSystem.MinMaxGradient(color);
             ps.Play();
             enabled = true;
         }
