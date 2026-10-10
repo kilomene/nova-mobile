@@ -447,8 +447,8 @@ namespace NovaMobile.Classes
                 for (int j = 0; j < _scratch.Count; j++)
                 {
                     if (struck.Contains(_scratch[j])) continue;
-                    float d = (_scratch[j].transform.position - from).sqrMagnitude;
-                    if (d < bd) { bd = d; best = _scratch[j]; }
+                    float dist = (_scratch[j].transform.position - from).sqrMagnitude;
+                    if (dist < bd) { bd = dist; best = _scratch[j]; }
                 }
                 if (best == null) break;
                 struck.Add(best);
