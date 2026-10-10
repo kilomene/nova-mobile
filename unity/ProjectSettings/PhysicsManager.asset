@@ -1,0 +1,12 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!19 &1
+PhysicsManager:
+  m_ObjectHideFlags: 0
+  serializedVersion: 10
+  m_Gravity: {x: 0, y: -19.62, z: 0}
+  m_DefaultContactOffset: 0.01
+  m_BounceThreshold: 2
+  m_SleepThreshold: 0.005
+  m_DefaultMaxAngularSpeed: 7
+  m_QueriesHitTriggers: 1

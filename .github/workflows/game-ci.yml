@@ -1,0 +1,62 @@
+# NOVA Mobile — Unity 6 → Android APK (GitHub builds the APK)
+#
+# WHAT IT DOES
+#   1. Builds the Unity 6 project in unity/ with game-ci/unity-builder
+#      (Android target, IL2CPP, ARM64) and uploads the APK as an artifact.
+#   2. Runs ONLY when unity/** or this workflow changes, or on manual dispatch.
+#
+# REQUIREMENTS (repo secrets — Zenas's step, one time)
+#   - UNITY_LICENSE   : Unity Personal license file content (.ulf)
+#   - UNITY_EMAIL     : Unity ID email
+#   - UNITY_PASSWORD  : Unity ID password
+#   Without these the build fails at activation — that is expected until
+#   Zenas provides them. Get the license at https://license.unity3d.com/manual
+#
+# STRICT RULE: nobody builds the APK locally. GitHub Actions builds it.
+
+name: Build NOVA Mobile (Unity) APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "unity/**"
+      - ".github/workflows/game-ci.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Unity Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Unity Library
+        uses: actions/cache@v4
+        with:
+          path: unity/Library
+          key: unity-Library-Android-6000.0.23f1-${{ hashFiles('unity/Assets/**', 'unity/Packages/**', 'unity/ProjectSettings/**') }}
+          restore-keys: |
+            unity-Library-Android-6000.0.23f1-
+
+      - name: Build APK with game-ci
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: 6000.0.23f1
+          projectPath: unity
+          targetPlatform: Android
+          androidAppBundle: false
+          androidVersionCode: 1
+          buildName: nova-mobile-unity
+          buildPath: build/Android
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nova-mobile-unity-apk
+          path: build/Android

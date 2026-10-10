@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!129 &1
+PlayerSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 18
+  productGUID: 452fbfdd26644928bc8deaebd06f4d91
+  companyName: Nova Works
+  productName: NOVA Mobile
+  applicationIdentifier:
+    Android: com.novamobile.game
+    Standalone: com.novamobile.game
+  buildNumber:
+    Android: 1
+  bundleVersion: 1.0
+  AndroidBundleVersionCode: 1
+  AndroidMinSdkVersion: 24
+  defaultInterfaceOrientation: 4
+  allowedAutorotateToPortrait: 0
+  allowedAutorotateToPortraitUpsideDown: 0
+  allowedAutorotateToLandscapeRight: 1
+  allowedAutorotateToLandscapeLeft: 1
+  activeInputHandler: 2
+  scriptingBackend:
+    Android: 1
+  targetArchitectures:
+    Android: 2
+  apiCompatibilityLevelPerPlatform:
+    Android: 3
+  useAPKExpansionFiles: 0
+  androidUseCustomKeystore: 0
+  AndroidShowActivityIndicatorOnLoading: -1
+  androidMaxAspectRatio: 2.1
+  applicationSupportsAccelerometer: 1

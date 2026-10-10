@@ -1,0 +1,17 @@
+# Unity generated — never commit
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+MemoryCaptures/
+# OS
+.DS_Store
+Thumbs.db
+# Rider/VS
+.idea/
+.vscode/
+*.csproj
+*.sln

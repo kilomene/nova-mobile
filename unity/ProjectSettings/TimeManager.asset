@@ -1,0 +1,9 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!6 &1
+TimeManager:
+  m_ObjectHideFlags: 0
+  serializedVersion: 3
+  FixedTimestep: 0.02
+  MaxFixedFrameTime: 0.1
+  TimeScale: 1
