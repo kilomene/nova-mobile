@@ -1,0 +1,70 @@
+# NOVA Mobile — native Android APK built by GitHub Actions.
+# NOBODY builds the APK locally. Every push to main (touching godot/)
+# produces a signed, installable debug APK as a workflow artifact.
+# Zenas downloads it from the Actions tab.
+
+name: Build NOVA Mobile APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'godot/**'
+      - '.github/workflows/godot-android.yml'
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Download Godot 4.3
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip -q Godot_v4.3-stable_linux.x86_64.zip
+          chmod +x Godot_v4.3-stable_linux.x86_64
+          ./Godot_v4.3-stable_linux.x86_64 --version
+
+      - name: Install Godot export templates
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/4.3.stable
+          mkdir -p /tmp/godot-templates
+          unzip -q Godot_v4.3-stable_export_templates.tpz -d /tmp/godot-templates
+          cp -r /tmp/godot-templates/templates/* ~/.local/share/godot/export_templates/4.3.stable/
+          ls ~/.local/share/godot/export_templates/4.3.stable/ | head
+
+      - name: Export debug APK
+        run: |
+          cd godot
+          ../Godot_v4.3-stable_linux.x86_64 --headless --path . --export-debug "Android" ../nova-mobile-debug.apk
+          ls -la ../nova-mobile-debug.apk
+
+      - name: Sign APK
+        run: |
+          SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          BUILD_TOOLS="$(ls -d "$SDK_ROOT"/build-tools/*/ | sort -V | tail -1)"
+          echo "build-tools: $BUILD_TOOLS"
+          keytool -genkey -keystore debug.keystore -alias androiddebugkey \
+            -storepass android -keypass android -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+          "$BUILD_TOOLS/zipalign" -f 4 nova-mobile-debug.apk nova-mobile-aligned.apk
+          "$BUILD_TOOLS/apksigner" sign --ks debug.keystore --ks-pass:android \
+            --key-pass:android --out nova-mobile.apk nova-mobile-aligned.apk
+          "$BUILD_TOOLS/apksigner" verify nova-mobile.apk && echo "APK SIGNED OK"
+          ls -la nova-mobile.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nova-mobile-debug-apk
+          path: nova-mobile.apk
+          if-no-files-found: error

@@ -1,0 +1,273 @@
+class_name ClassDefs
+extends RefCounted
+## NOVA Mobile: battle royale class definitions.
+## 30 original NOVA classes across 5 professions, modeled on CODM's BR class
+## roster (see classes-research.md) but enhanced — "more advanced than CODM".
+## Data-driven: actives/passives implemented in class_system.gd.
+## "upgrade" is a data hook for future class leveling (not built yet).
+
+const PROFESSIONS := ["tracker", "support", "disrupt", "defense", "stealth"]
+
+const PROFESSION_NAMES := {
+	"tracker": "TRACKER", "support": "SUPPORT", "disrupt": "DISRUPT",
+	"defense": "DEFENSE", "stealth": "STEALTH",
+}
+
+const PROFESSION_COLORS := {
+	"tracker": Color(1.0, 0.72, 0.15), "support": Color(0.25, 0.85, 0.45),
+	"disrupt": Color(0.75, 0.35, 1.0), "defense": Color(0.3, 0.6, 1.0),
+	"stealth": Color(0.65, 0.65, 0.7),
+}
+
+## Profession passives (always-on, stack with the class passive).
+const PROFESSION_PASSIVES := {
+	"tracker": "Enemies you damage are marked for 5s. +10% move speed.",
+	"support": "Healing 40% stronger. Health regen starts 2s sooner.",
+	"disrupt": "+15% move speed for 6s after using your skill.",
+	"defense": "-35% explosive damage. -25% zone damage.",
+	"stealth": "Enemies notice you 30% later. -15% damage taken while sprinting.",
+}
+
+const CLASSES := [
+	# ---------------- TRACKER ----------------
+	{"id": "pathfinder", "name": "Pathfinder", "profession": "tracker",
+		"tagline": "Recon specialist — nothing hides for long.",
+		"active": "Sensor Dart", "cooldown": 35.0,
+		"active_desc": "Fire a sensor dart: on landing it scans 30m and marks every enemy — live pings with a countdown, visible through walls.",
+		"passive": "Bloodhound", "passive_desc": "+20% ADS speed. Damaged enemies stay marked 6s.",
+		"accent": Color(1.0, 0.72, 0.15),
+		"upgrade": "Upgraded: scan radius 45m, marks also reveal enemy class icons."},
+	{"id": "kennelmaster", "name": "Kennelmaster", "profession": "tracker",
+		"tagline": "Two guns are good. Fangs are better.",
+		"active": "Cyber-Hound", "cooldown": 50.0,
+		"active_desc": "Deploy a cyber-hound that hunts the nearest enemy for 20s — fast, loud, and very bitey. Enemies prioritize it over you.",
+		"passive": "Pheromone Field", "passive_desc": "Enemies engage you 20% later while your hound is active.",
+		"accent": Color(1.0, 0.72, 0.15),
+		"upgrade": "Upgraded: two hounds, 30s duration, hounds explode for 20 damage when killed."},
+	{"id": "saboteur", "name": "Saboteur", "profession": "tracker",
+		"tagline": "Their toys stop working around you.",
+		"active": "EMP Drone", "cooldown": 55.0,
+		"active_desc": "Launch a drone that seeks the nearest enemy and pulses EMP for 15s — slows them 50% and silences their gunfire in bursts.",
+		"passive": "Engineer Sight", "passive_desc": "Enemy traps, turrets and deployables glow red through walls.",
+		"accent": Color(1.0, 0.72, 0.15),
+		"upgrade": "Upgraded: drone also disables enemy class skills for 6s."},
+	{"id": "skyhook", "name": "Skyhook", "profession": "tracker",
+		"tagline": "Why walk around the mountain.",
+		"active": "Catapult Pad", "cooldown": 45.0,
+		"active_desc": "Drop a launch pad: step on it to blast 25m skyward and steer a dive-bomb glide — slam down for an AoE stun.",
+		"passive": "Extended Glide", "passive_desc": "Drop-in gliding is 30% faster and more responsive.",
+		"accent": Color(1.0, 0.72, 0.15),
+		"upgrade": "Upgraded: landing slam stuns 4s and the pad can be reused twice."},
+	{"id": "ballista", "name": "Ballista", "profession": "tracker",
+		"tagline": "Artillery with a targeting computer.",
+		"active": "Smart Mortar", "cooldown": 60.0,
+		"active_desc": "Deploy a smart mortar: 6 guided shells arc onto the nearest visible enemy over 8s. Destroyable (60 HP).",
+		"passive": "Demolitions", "passive_desc": "+25% explosive damage (rockets, grenades, RP-7).",
+		"accent": Color(1.0, 0.72, 0.15),
+		"upgrade": "Upgraded: 10 shells, anti-vehicle lock-on, smoke-screen mode."},
+	# ---------------- SUPPORT ----------------
+	{"id": "surgeon", "name": "Surgeon", "profession": "support",
+		"tagline": "Patch up. Push forward.",
+		"active": "Trauma Station", "cooldown": 40.0,
+		"active_desc": "Deploy a station healing 12 HP/s in 6m for 12s — cleanses slows and over-heals into temporary bonus HP.",
+		"passive": "Master Healer", "passive_desc": "All healing 50% stronger. Regen starts even sooner.",
+		"accent": Color(0.25, 0.85, 0.45),
+		"upgrade": "Upgraded: station also repairs armor and revives 50% faster nearby."},
+	{"id": "quartermaster", "name": "Quartermaster", "profession": "support",
+		"tagline": "Logistics wins firefights.",
+		"active": "Supply Drop", "cooldown": 45.0,
+		"active_desc": "Call in 3 supply packs: +50 armor plates and bonus ammo each. Yours to share.",
+		"passive": "Deep Pockets", "passive_desc": "Skill recharges 20% faster. +1 grenade capacity, +50% ammo from pickups.",
+		"accent": Color(0.25, 0.85, 0.45),
+		"upgrade": "Upgraded: packs also grant a free skill-charge refill."},
+	{"id": "aegis", "name": "Aegis", "profession": "support",
+		"tagline": "Bring a wall to a gunfight.",
+		"active": "Kinetic Dome", "cooldown": 50.0,
+		"active_desc": "Raise a 5m kinetic dome for 10s: -50% bullet damage inside. Yours. Theirs? No.",
+		"passive": "Bulwark Start", "passive_desc": "Begin every match with 50 armor plated.",
+		"accent": Color(0.25, 0.85, 0.45),
+		"upgrade": "Upgraded: dome reflects 30% damage back and becomes mobile."},
+	{"id": "phoenix", "name": "Phoenix", "profession": "support",
+		"tagline": "Death is a suggestion.",
+		"active": "Guardian Drone", "cooldown": 55.0,
+		"active_desc": "Launch a guardian drone that orbits you for 15s, shredding the nearest enemy on sight.",
+		"passive": "Second Life", "passive_desc": "Once per match, lethal damage revives you at 50 HP instead of killing you.",
+		"accent": Color(0.25, 0.85, 0.45),
+		"upgrade": "Upgraded: drone lasts 25s; self-revive restores full HP + brief speed."},
+	{"id": "replicator", "name": "Replicator", "profession": "support",
+		"tagline": "One man's loot is everyone's loot.",
+		"active": "Tactical Mirror", "cooldown": 60.0,
+		"active_desc": "Deploy a mirror that duplicates the 3 nearest loot pickups — and instantly halves your remaining skill cooldown.",
+		"passive": "Lucky Scavenger", "passive_desc": "+25% ammo from pickups. 20% chance gun rolls come out a tier hotter.",
+		"accent": Color(0.25, 0.85, 0.45),
+		"upgrade": "Upgraded: bank one duplicate for later; mirror also copies armor."},
+	# ---------------- DISRUPT ----------------
+	{"id": "warden", "name": "Warden", "profession": "disrupt",
+		"tagline": "This hallway is closed.",
+		"active": "Arc Trap", "cooldown": 30.0,
+		"active_desc": "Place a high-voltage trap (chain up to 3): enemies inside are slowed 50% and zapped 8 dps for 10s.",
+		"passive": "Overclock", "passive_desc": "Skill recharges 25% faster.",
+		"accent": Color(0.75, 0.35, 1.0),
+		"upgrade": "Upgraded: traps link into a chain-lightning web; add alarm + EMP variants."},
+	{"id": "chronos", "name": "Chronos", "profession": "disrupt",
+		"tagline": "That never happened.",
+		"active": "Time Rewind", "cooldown": 55.0,
+		"active_desc": "Snap back to where — and how healthy — you were 8 seconds ago. Leaves a time-echo decoy at your departure point.",
+		"passive": "Temporal Flow", "passive_desc": "+10% move speed. You just walk like you own time.",
+		"accent": Color(0.75, 0.35, 1.0),
+		"upgrade": "Upgraded: rewind 12s; echo decoy shoots fake tracers."},
+	{"id": "mirage", "name": "Mirage", "profession": "disrupt",
+		"tagline": "Now you see me. Now you don't. Now you see someone else.",
+		"active": "Holo Decoys", "cooldown": 40.0,
+		"active_desc": "Spawn 2 holographic decoys with scripted behavior (one flees, one returns fire with fake tracers) while you turn invisible for 3s.",
+		"passive": "Parting Gift", "passive_desc": "Destroyed decoys detonate for 15 damage.",
+		"accent": Color(0.75, 0.35, 1.0),
+		"upgrade": "Upgraded: 3 decoys; invisibility lasts 5s and muffles reloads."},
+	{"id": "wildfire", "name": "Wildfire", "profession": "disrupt",
+		"tagline": "Smoke that bites back.",
+		"active": "Hunter Smoke", "cooldown": 35.0,
+		"active_desc": "Launch a canister 25m: 8m smoke cloud for 12s that slows enemies 40% and MARKS them through the haze.",
+		"passive": "Smoke Runner", "passive_desc": "You move 20% faster in smoke and ignore its slow.",
+		"accent": Color(0.75, 0.35, 1.0),
+		"upgrade": "Upgraded: selectable payloads — flash-smoke blinds, EMP-smoke kills drones, heal-smoke buffs allies."},
+	{"id": "ghost", "name": "Ghost", "profession": "disrupt",
+		"tagline": "You never saw the signal die.",
+		"active": "Signal Jam", "cooldown": 45.0,
+		"active_desc": "20m jam bubble for 10s: enemies inside stop engaging and wander, their gadgets die. Spoofs fake blips on their senses.",
+		"passive": "Clean Signal", "passive_desc": "Immune to enemy jams and EMP slows.",
+		"accent": Color(0.75, 0.35, 1.0),
+		"upgrade": "Upgraded: hijack one enemy gadget inside the bubble."},
+	{"id": "bulwark", "name": "Bulwark", "profession": "disrupt",
+		"tagline": "The room disagrees with you.",
+		"active": "Shockwave Pulse", "cooldown": 30.0,
+		"active_desc": "Radial shockwave: hurls enemies back 8m and stuns their gunfire for 3s. Room cleared.",
+		"passive": "Immovable", "passive_desc": "Immune to knockback. -20% explosive damage.",
+		"accent": Color(0.75, 0.35, 1.0),
+		"upgrade": "Upgraded: aimable cone or 360°; reflects projectiles back."},
+	{"id": "ventriloquist", "name": "Ventriloquist", "profession": "disrupt",
+		"tagline": "Did you hear that? No? Exactly.",
+		"active": "Phantom Firefight", "cooldown": 35.0,
+		"active_desc": "Plant a phantom sound source anywhere in 30m: enemies hear a full firefight and rotate to investigate for 8s.",
+		"passive": "Quick Tongue", "passive_desc": "+10% move speed.",
+		"accent": Color(0.75, 0.35, 1.0),
+		"upgrade": "Upgraded: also fakes your minimap signature; two phantoms at once."},
+	{"id": "volt", "name": "Volt", "profession": "disrupt",
+		"tagline": "Weather advisory: you.",
+		"active": "Chain Lightning", "cooldown": 40.0,
+		"active_desc": "Lightning arcs across up to 4 clustered enemies (25 dmg + 3s slow) — then overcharges your weapon with shock rounds for 6s.",
+		"passive": "Live Wire", "passive_desc": "+10% weapon damage.",
+		"accent": Color(0.75, 0.35, 1.0),
+		"upgrade": "Upgraded: arcs to 6 targets; overcharge also chains on hit."},
+	# ---------------- DEFENSE ----------------
+	{"id": "rampart", "name": "Rampart", "profession": "defense",
+		"tagline": "Cover, on demand.",
+		"active": "Aegis Wall", "cooldown": 40.0,
+		"active_desc": "Slam down a 3m ballistic wall (120 HP, blocks sightlines) that flashbangs nearby enemies on deploy. Pick it up, move it, re-place it.",
+		"passive": "Reinforced", "passive_desc": "-40% non-bullet damage (explosives, zone ticks, melee).",
+		"accent": Color(0.3, 0.6, 1.0),
+		"upgrade": "Upgraded: one-way firing wall — you shoot out, they can't shoot in."},
+	{"id": "lastword", "name": "Last Word", "profession": "defense",
+		"tagline": "The argument-ender.",
+		"active": "Sentry Turret", "cooldown": 60.0,
+		"active_desc": "Deploy an auto-turret (100 HP, 60s): tracks and shreds the nearest enemy while you keep moving.",
+		"passive": "Last Stand", "passive_desc": "Once per match, lethal damage leaves you at 25 HP instead of killing you.",
+		"accent": Color(0.3, 0.6, 1.0),
+		"upgrade": "Upgraded: twin barrels; Last Stand keeps your full primary."},
+	{"id": "overlord", "name": "Overlord", "profession": "defense",
+		"tagline": "Danger close? Good.",
+		"active": "Cluster Strike", "cooldown": 75.0,
+		"active_desc": "Paint a target with the laser designator: 2s later, 5 airstrikes walk a 12m zone over 4s. Devastating in late zones.",
+		"passive": "Fly Swatter", "passive_desc": "+50% launcher reload speed. +15% launcher damage.",
+		"accent": Color(0.3, 0.6, 1.0),
+		"upgrade": "Upgraded: selectable patterns — cluster, precision single, smoke barrage."},
+	{"id": "pyre", "name": "Pyre", "profession": "defense",
+		"tagline": "The floor is lava. Literally.",
+		"active": "Tar Bag", "cooldown": 35.0,
+		"active_desc": "Hurl a tar bag: 6m pool slows enemies 60% and burns 6 dps. Detonate it on command for a 40-damage fireburst.",
+		"passive": "Firebug", "passive_desc": "+20% area damage. Your own flames never hurt you.",
+		"accent": Color(0.3, 0.6, 1.0),
+		"upgrade": "Upgraded: tar sticks to vehicles and wrecks their handling."},
+	{"id": "fallout", "name": "Fallout", "profession": "defense",
+		"tagline": "Enter the hot zone. It's yours.",
+		"active": "Radiation Zone", "cooldown": 45.0,
+		"active_desc": "Dose a 7m zone for 15s: 10 dps ramping +5/s the longer enemies linger. You are immune — fight inside your own storm.",
+		"passive": "Lead Lining", "passive_desc": "-25% zone damage. Your radiation never touches you.",
+		"accent": Color(0.3, 0.6, 1.0),
+		"upgrade": "Upgraded: hot core melts armor first; zone follows you slowly."},
+	# ---------------- STEALTH ----------------
+	{"id": "spider", "name": "Spider", "profession": "stealth",
+		"tagline": "Walls are just suggestions.",
+		"active": "Grapple Hook", "cooldown": 25.0,
+		"active_desc": "Fire a hook up to 40m and get yanked to it — rooftops, towers, ridgelines. Drop onto an enemy from above for 75 melee damage.",
+		"passive": "Dead Silence", "passive_desc": "Enemies notice you 35% later.",
+		"accent": Color(0.65, 0.65, 0.7),
+		"upgrade": "Upgraded: 3 charges; silent takedown bonus on grapple kills."},
+	{"id": "wraith", "name": "Wraith", "profession": "stealth",
+		"tagline": "You felt watched. You were wrong.",
+		"active": "Active Camo", "cooldown": 45.0,
+		"active_desc": "Near-invisibility for 8s. Move freely — firing breaks it. They can't hit what they can't see.",
+		"passive": "Ghost Rounds", "passive_desc": "First 3s after camo breaks: +50% damage.",
+		"accent": Color(0.65, 0.65, 0.7),
+		"upgrade": "Upgraded: no footprints, muffled reloads, 12s duration."},
+	{"id": "comet", "name": "Comet", "profession": "stealth",
+		"tagline": "Gravity is negotiable.",
+		"active": "Nitrogen Leap", "cooldown": 30.0,
+		"active_desc": "Blast 12m skyward on nitrogen with full air control for 4s — then ground-slam for 30 AoE damage in 5m.",
+		"passive": "Light Frame", "passive_desc": "+20% jump height. -50% fall damage.",
+		"accent": Color(0.65, 0.65, 0.7),
+		"upgrade": "Upgraded: air-dodge charges; slam keeps full firing accuracy."},
+	{"id": "ronin", "name": "Ronin", "profession": "stealth",
+		"tagline": "One cut. Maybe three.",
+		"active": "Katana Dash", "cooldown": 30.0,
+		"active_desc": "12m blade dash through enemies (50 dmg each, chains up to 3 targets). For 1.5s after, incoming bullets are deflected.",
+		"passive": "Iaido", "passive_desc": "+25% melee damage. +2m melee lunge.",
+		"accent": Color(0.65, 0.65, 0.7),
+		"upgrade": "Upgraded: each kill refunds a dash charge; deflected bullets fly back."},
+	{"id": "valkyrie", "name": "Valkyrie", "profession": "stealth",
+		"tagline": "Air superiority, personal scale.",
+		"active": "Jetpack", "cooldown": 50.0,
+		"active_desc": "6s of true flight toward your aim — hover-ADS mid-air, then slam-cancel into a silent slide landing.",
+		"passive": "Soft Landing", "passive_desc": "No landing recovery. -50% fall damage.",
+		"accent": Color(0.65, 0.65, 0.7),
+		"upgrade": "Upgraded: fuel management; hover-aim mode; silent landings."},
+	{"id": "gatekeeper", "name": "Gatekeeper", "profession": "stealth",
+		"tagline": "Be nowhere. Then be there.",
+		"active": "Blink Beacon", "cooldown": 40.0,
+		"active_desc": "Throw a beacon up to 20m; trigger again within 30s to blink to it, keeping your momentum for trick plays.",
+		"passive": "Attuned", "passive_desc": "Skill recharges 20% faster.",
+		"accent": Color(0.65, 0.65, 0.7),
+		"upgrade": "Upgraded: 3 linked beacons; beacon throwable like a grenade."},
+	{"id": "trampoline", "name": "Trampoline", "profession": "stealth",
+		"tagline": "The floor sends its regards.",
+		"active": "Bounce Pad", "cooldown": 30.0,
+		"active_desc": "Deploy a pad that launches anyone 15m skyward — you, teammates, enemies. Remote-detonate it to launch enemies on demand.",
+		"passive": "Spring Loaded", "passive_desc": "Your pads launch you 30% higher. -50% fall damage.",
+		"accent": Color(0.65, 0.65, 0.7),
+		"upgrade": "Upgraded: adjustable angle/power; catch-net mode saves falling teammates."},
+]
+
+
+static func get_by_id(cid: String) -> Dictionary:
+	for c in CLASSES:
+		if str(c["id"]) == cid:
+			return c
+	return {}
+
+
+static func ids() -> Array:
+	var out := []
+	for c in CLASSES:
+		out.append(str(c["id"]))
+	return out
+
+
+static func by_profession(prof: String) -> Array:
+	var out := []
+	for c in CLASSES:
+		if str(c["profession"]) == prof:
+			out.append(c)
+	return out
+
+
+static func count() -> int:
+	return CLASSES.size()

@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ally.gd" id="1"]
+
+[sub_resource type="CapsuleShape3D" id="Cap_1"]
+radius = 0.4
+height = 1.7
+
+[sub_resource type="SphereMesh" id="Flash_1"]
+radius = 0.09
+height = 0.18
+
+[sub_resource type="StandardMaterial3D" id="FlashMat_1"]
+albedo_color = Color(0.4, 0.8, 1, 1)
+emission_enabled = true
+emission = Color(0.3, 0.7, 1, 1)
+emission_energy_multiplier = 3.0
+
+[node name="Ally" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("Cap_1")
+
+[node name="MuzzleFlash" type="MeshInstance3D" parent="."]
+visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -0.45)
+mesh = SubResource("Flash_1")
+surface_material_override/0 = SubResource("FlashMat_1")

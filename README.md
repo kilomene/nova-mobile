@@ -1,34 +1,27 @@
 # NOVA Mobile
 
-A 3D battle royale mobile game set in Lagos, Nigeria. Built with Three.js.
+**NOVA Mobile** — a native 3D battle-royale game for Android, built with **Godot Engine 4.3**. Set in Lagos, Nigeria. CODM-grade systems, NOVA-original advancements.
 
-## Map #1: Makoko Village
+## Get the APK
 
-The floating village on the Lagos Lagoon — stilt houses over animated water,
-wooden walkways, canoes, enterable houses with interiors, windows to shoot
-through, weather and atmosphere. Fully 3D, mobile-first.
+Nobody builds the APK by hand. **GitHub Actions builds it**: every push to `main` that touches `godot/` produces a signed, installable debug APK. Download it from the **Actions** tab → latest run → **Artifacts** → `nova-mobile-debug-apk`.
 
-## Battle royale
+## Layout
 
-- Drop into the village alongside AI combatants
-- Loot weapons, ammo, and health across the map
-- The safe zone shrinks — last one standing wins
+- `godot/` — the Godot 4.3 project: scenes, scripts, guns, mythic skins, vehicles, store, export presets (`com.novamobile.game`, landscape)
+- `server/` — NOVA payments backend: tiny Flutterwave relay (holds the secret key, creates checkout links, verifies transactions). The game never ships the secret key.
+- `3d-shooter-game.html` — the original web prototype, kept as design history only
 
-## Controls (mobile)
+## The game
 
-- Left virtual joystick: move
-- Drag on screen: aim
-- Fire button: shoot
+- One connected BR world (NOVA WORLD): 14 Lagos-inspired regions, 100 combatants, 25 squads
+- 137 original NOVA guns + 411 mythic skins with kill evolution
+- 30 original BR classes, CODM-exact touch controls, full vehicle fleet (incl. pilotable B2), fuel + filling stations (a NOVA original), buy stations, airdrops, NOVA Points store
+- Battle royale only. Multiplayer modes and true online play are later phases.
 
-Desktop: WASD + mouse (pointer lock), click to shoot.
+## Build locally (not the delivery path)
 
-## Play
-
-Open `3d-shooter-game.html` in a browser (best on a phone, landscape).
-No build step, no server needed for the single-player battle royale mode.
-
-## Roadmap
-
-- More Lagos maps (Lekki street, Computer Village market, Banana Island, ...)
-- Phase 2: true multiplayer — dedicated game server, database, realtime sync,
-  instant in-game notifications.
+```bash
+# Godot 4.3 + export templates required
+Godot_v4.3-stable_linux.x86_64 --headless --path godot --export-debug "Android" out.apk
+```
