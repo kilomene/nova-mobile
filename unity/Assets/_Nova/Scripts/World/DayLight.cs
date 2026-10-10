@@ -42,7 +42,7 @@ namespace NovaMobile.World
             _sun.shadowResolution = UnityEngine.Rendering.LightShadowResolution.Medium;
             _sun.shadowBias = 0.05f;
             // Mobile-friendly: shadows only near the action.
-            _sun.shadowDistance = 120f;
+            QualitySettings.shadowDistance = 120f;
             transform.rotation = Quaternion.Euler(SunElevation, SunAzimuth, 0f);
 
             RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;

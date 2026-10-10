@@ -53,7 +53,7 @@ namespace NovaMobile.Loot
                 case LootKind.Ammo: return LootIconKind.Ammo;
                 case LootKind.Cash: return LootIconKind.Cash;
                 case LootKind.Frag: return LootIconKind.Frag;
-                case LootIconKind.Smoke: return LootIconKind.Smoke;
+                case LootKind.Smoke: return LootIconKind.Smoke;
                 case LootKind.Scorestreak: return LootIconKind.Scorestreak;
                 case LootKind.FuelCan: return LootIconKind.FuelCan;
                 case LootKind.Attachment: return LootIconKind.Attachment;

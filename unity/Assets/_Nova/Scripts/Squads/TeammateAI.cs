@@ -228,7 +228,7 @@ namespace NovaMobile.Squads
             if (_barkCd > 0f) return;
             _barkCd = 14f;
             SquadManager.RadioBark(_agent.Callsign,
-                BotNames.Bark(BotNames.BarkEngage, SquadManager.Rng) + " — " + e.Callsign);
+                new string[] { BotNames.Bark(BotNames.BarkEngage, SquadManager.Rng) + " — " + e.Callsign });
         }
 
         private void Bark(string line)

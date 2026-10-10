@@ -60,7 +60,7 @@ namespace NovaMobile.Player
             _root.AddComponent<GraphicRaycaster>();
 
             var bg = NewImage(_root.transform, "Dim", Bg);
-            Stretch(bg.rectTransform);
+            Stretch(((RectTransform)bg.transform));
 
             // Centered panel.
             var panelGo = new GameObject("Panel");
@@ -77,9 +77,9 @@ namespace NovaMobile.Player
             // Title bar.
             var title = NewText(panelGo.transform, "SETTINGS", 30, Color.white,
                 TextAnchor.MiddleLeft);
-            PlaceTop(title.rectTransform, 24f, 16f, 500f, 48f);
+            PlaceTop(((RectTransform)title.transform), 24f, 16f, 500f, 48f);
             var xBtn = NewButton(panelGo.transform, "X", 24, Accent);
-            PlaceTop(xBtn.rectTransform, 760f - 80f, 16f, 56f, 48f);
+            PlaceTop(((RectTransform)xBtn.transform), 760f - 80f, 16f, 56f, 48f);
             xBtn.onClick.AddListener(Close);
 
             // Scroll area.
@@ -172,10 +172,10 @@ namespace NovaMobile.Player
         private void Header(string text)
         {
             var l = NewText(_content, text, 20, Accent, TextAnchor.MiddleLeft);
-            PlaceRow(l.rectTransform, 40f);
+            PlaceRow(((RectTransform)l.transform), 40f);
             _cursor += 40f;
             var rule = NewImage(_content, "Rule", new Color(1f, 0.6f, 0.12f, 0.35f));
-            PlaceRow(rule.rectTransform, 2f, indent: 0f);
+            PlaceRow(((RectTransform)rule.transform), 2f, indent: 0f);
             _cursor += 10f;
         }
 
@@ -188,25 +188,25 @@ namespace NovaMobile.Player
             PlaceRow(rt, 56f);
 
             var lab = NewText(row.transform, label, 19, TextDim, TextAnchor.MiddleLeft);
-            lab.rectTransform.anchorMin = lab.rectTransform.anchorMax = new Vector2(0f, 0.5f);
-            lab.rectTransform.pivot = new Vector2(0f, 0.5f);
-            lab.rectTransform.anchoredPosition = new Vector2(10f, 0f);
-            lab.rectTransform.sizeDelta = new Vector2(220f, 40f);
+            ((RectTransform)lab.transform).anchorMin = ((RectTransform)lab.transform).anchorMax = new Vector2(0f, 0.5f);
+            ((RectTransform)lab.transform).pivot = new Vector2(0f, 0.5f);
+            ((RectTransform)lab.transform).anchoredPosition = new Vector2(10f, 0f);
+            ((RectTransform)lab.transform).sizeDelta = new Vector2(220f, 40f);
 
             var slider = NewSlider(row.transform);
-            slider.rectTransform.anchorMin = slider.rectTransform.anchorMax = new Vector2(0f, 0.5f);
-            slider.rectTransform.pivot = new Vector2(0f, 0.5f);
-            slider.rectTransform.anchoredPosition = new Vector2(240f, 0f);
-            slider.rectTransform.sizeDelta = new Vector2(320f, 36f);
+            ((RectTransform)slider.transform).anchorMin = ((RectTransform)slider.transform).anchorMax = new Vector2(0f, 0.5f);
+            ((RectTransform)slider.transform).pivot = new Vector2(0f, 0.5f);
+            ((RectTransform)slider.transform).anchoredPosition = new Vector2(240f, 0f);
+            ((RectTransform)slider.transform).sizeDelta = new Vector2(320f, 36f);
             slider.minValue = min;
             slider.maxValue = max;
             slider.wholeNumbers = false;
 
             var val = NewText(row.transform, "", 19, Color.white, TextAnchor.MiddleLeft);
-            val.rectTransform.anchorMin = val.rectTransform.anchorMax = new Vector2(0f, 0.5f);
-            val.rectTransform.pivot = new Vector2(0f, 0.5f);
-            val.rectTransform.anchoredPosition = new Vector2(570f, 0f);
-            val.rectTransform.sizeDelta = new Vector2(110f, 40f);
+            ((RectTransform)val.transform).anchorMin = ((RectTransform)val.transform).anchorMax = new Vector2(0f, 0.5f);
+            ((RectTransform)val.transform).pivot = new Vector2(0f, 0.5f);
+            ((RectTransform)val.transform).anchoredPosition = new Vector2(570f, 0f);
+            ((RectTransform)val.transform).sizeDelta = new Vector2(110f, 40f);
 
             slider.onValueChanged.AddListener(v =>
             {
@@ -229,16 +229,16 @@ namespace NovaMobile.Player
             PlaceRow(rt, 52f);
 
             var lab = NewText(row.transform, label, 19, TextDim, TextAnchor.MiddleLeft);
-            lab.rectTransform.anchorMin = lab.rectTransform.anchorMax = new Vector2(0f, 0.5f);
-            lab.rectTransform.pivot = new Vector2(0f, 0.5f);
-            lab.rectTransform.anchoredPosition = new Vector2(10f, 0f);
-            lab.rectTransform.sizeDelta = new Vector2(460f, 40f);
+            ((RectTransform)lab.transform).anchorMin = ((RectTransform)lab.transform).anchorMax = new Vector2(0f, 0.5f);
+            ((RectTransform)lab.transform).pivot = new Vector2(0f, 0.5f);
+            ((RectTransform)lab.transform).anchoredPosition = new Vector2(10f, 0f);
+            ((RectTransform)lab.transform).sizeDelta = new Vector2(460f, 40f);
 
             var btn = NewButton(row.transform, "", 19, Color.white);
-            btn.rectTransform.anchorMin = btn.rectTransform.anchorMax = new Vector2(0f, 0.5f);
-            btn.rectTransform.pivot = new Vector2(0f, 0.5f);
-            btn.rectTransform.anchoredPosition = new Vector2(560f, 0f);
-            btn.rectTransform.sizeDelta = new Vector2(110f, 44f);
+            ((RectTransform)btn.transform).anchorMin = ((RectTransform)btn.transform).anchorMax = new Vector2(0f, 0.5f);
+            ((RectTransform)btn.transform).pivot = new Vector2(0f, 0.5f);
+            ((RectTransform)btn.transform).anchoredPosition = new Vector2(560f, 0f);
+            ((RectTransform)btn.transform).sizeDelta = new Vector2(110f, 44f);
             var btnText = btn.GetComponentInChildren<Text>();
 
             Action paint = () =>
@@ -265,16 +265,16 @@ namespace NovaMobile.Player
             PlaceRow(rt, 56f);
 
             var lab = NewText(row.transform, label, 19, TextDim, TextAnchor.MiddleLeft);
-            lab.rectTransform.anchorMin = lab.rectTransform.anchorMax = new Vector2(0f, 0.5f);
-            lab.rectTransform.pivot = new Vector2(0f, 0.5f);
-            lab.rectTransform.anchoredPosition = new Vector2(10f, 0f);
-            lab.rectTransform.sizeDelta = new Vector2(380f, 40f);
+            ((RectTransform)lab.transform).anchorMin = ((RectTransform)lab.transform).anchorMax = new Vector2(0f, 0.5f);
+            ((RectTransform)lab.transform).pivot = new Vector2(0f, 0.5f);
+            ((RectTransform)lab.transform).anchoredPosition = new Vector2(10f, 0f);
+            ((RectTransform)lab.transform).sizeDelta = new Vector2(380f, 40f);
 
             var btn = NewButton(row.transform, btnText, 19, Accent);
-            btn.rectTransform.anchorMin = btn.rectTransform.anchorMax = new Vector2(0f, 0.5f);
-            btn.rectTransform.pivot = new Vector2(0f, 0.5f);
-            btn.rectTransform.anchoredPosition = new Vector2(420f, 0f);
-            btn.rectTransform.sizeDelta = new Vector2(260f, 48f);
+            ((RectTransform)btn.transform).anchorMin = ((RectTransform)btn.transform).anchorMax = new Vector2(0f, 0.5f);
+            ((RectTransform)btn.transform).pivot = new Vector2(0f, 0.5f);
+            ((RectTransform)btn.transform).anchoredPosition = new Vector2(420f, 0f);
+            ((RectTransform)btn.transform).sizeDelta = new Vector2(260f, 48f);
             if (onPress != null) btn.onClick.AddListener(() => onPress());
             _cursor += 56f;
             return btn;
@@ -293,10 +293,10 @@ namespace NovaMobile.Player
             {
                 int idx = i;
                 var b = NewButton(row.transform, modes[i].ToUpper(), 20, TextDim);
-                b.rectTransform.anchorMin = b.rectTransform.anchorMax = new Vector2(0f, 0.5f);
-                b.rectTransform.pivot = new Vector2(0f, 0.5f);
-                b.rectTransform.anchoredPosition = new Vector2(10f + idx * 240f, 0f);
-                b.rectTransform.sizeDelta = new Vector2(220f, 52f);
+                ((RectTransform)b.transform).anchorMin = ((RectTransform)b.transform).anchorMax = new Vector2(0f, 0.5f);
+                ((RectTransform)b.transform).pivot = new Vector2(0f, 0.5f);
+                ((RectTransform)b.transform).anchoredPosition = new Vector2(10f + idx * 240f, 0f);
+                ((RectTransform)b.transform).sizeDelta = new Vector2(220f, 52f);
                 btns[idx] = b;
                 b.onClick.AddListener(() =>
                 {
@@ -380,8 +380,8 @@ namespace NovaMobile.Player
             t.color = col;
             t.alignment = anchor;
             t.raycastTarget = false;
-            t.rectTransform.anchorMin = t.rectTransform.anchorMax = new Vector2(0f, 1f);
-            t.rectTransform.pivot = new Vector2(0f, 1f);
+            ((RectTransform)t.transform).anchorMin = ((RectTransform)t.transform).anchorMax = new Vector2(0f, 1f);
+            ((RectTransform)t.transform).pivot = new Vector2(0f, 1f);
             return t;
         }
 
@@ -396,7 +396,7 @@ namespace NovaMobile.Player
             var btn = go.AddComponent<Button>();
             btn.transition = Selectable.Transition.None;
             var t = NewText(go.transform, text, size, col, TextAnchor.MiddleCenter);
-            var trt = t.rectTransform;
+            var trt = ((RectTransform)t.transform);
             trt.anchorMin = Vector2.zero;
             trt.anchorMax = Vector2.one;
             trt.pivot = new Vector2(0.5f, 0.5f);

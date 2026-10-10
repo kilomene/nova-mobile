@@ -333,7 +333,7 @@ namespace NovaMobile.Soldiers
             mf.sharedMesh = mesh;
             var mr = go.AddComponent<MeshRenderer>();
             mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-            mr.receiveShadow = false;
+            mr.receiveShadows = false;
             _matKey[mf] = matKey;
             _variantMatsList.Add(mf);
             _allRenderers.Add(mr);
@@ -658,7 +658,7 @@ namespace NovaMobile.Soldiers
             if (_lodT <= 0f)
             {
                 _lodT = 0.25f;
-                if (_cam == null) _cam = Camera.main;
+                if (_cam == null) _cam = Camera.main.transform;
                 if (_cam != null && !_dead)
                 {
                     bool far = (transform.position - _cam.transform.position).sqrMagnitude

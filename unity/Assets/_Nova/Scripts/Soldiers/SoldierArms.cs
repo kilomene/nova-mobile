@@ -110,7 +110,7 @@ namespace NovaMobile.Soldiers
             var mr = go.AddComponent<MeshRenderer>();
             mr.sharedMaterial = mat;
             mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            mr.receiveShadow = false;
+            mr.receiveShadows = false;
             return go.transform;
         }
 

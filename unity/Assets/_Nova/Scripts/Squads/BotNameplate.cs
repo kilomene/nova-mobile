@@ -69,7 +69,7 @@ namespace NovaMobile.Squads
                 p.Text.alignment = TextAlignment.Center;
                 var mr = p.Go.GetComponent<MeshRenderer>();
                 mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                mr.receiveShadow = false;
+                mr.receiveShadows = false;
                 _pool.Add(p);
             }
             p.Agent = agent;

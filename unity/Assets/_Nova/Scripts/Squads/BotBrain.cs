@@ -2,6 +2,7 @@ using UnityEngine;
 using NovaMobile.Core;
 using NovaMobile.Player;
 using NovaMobile.Soldiers;
+using NovaMobile.Classes;
 
 namespace NovaMobile.Squads
 {
