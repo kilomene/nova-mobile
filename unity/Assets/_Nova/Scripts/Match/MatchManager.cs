@@ -12,6 +12,9 @@ namespace NovaMobile.Match
     /// Ported from main.gd (match flow, drop-in handoff, zone ownership,
     /// kill accounting, airdrops, end screens).
     /// </summary>
+    /// <summary>Match flow phases: Lobby -> Drop -> Combat -> Victory/Defeat.</summary>
+    public enum MatchPhase { Lobby, Drop, Combat, Victory, Defeat }
+
     public class MatchManager : MonoBehaviour
     {
         // ---------------- exact contract ----------------
