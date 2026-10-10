@@ -50,6 +50,7 @@ jobs:
           targetPlatform: Android
           androidExportType: androidPackage
           androidVersionCode: 1
+          androidTargetSdkVersion: 35
           buildName: nova-mobile-unity
           buildsPath: build/Android
 
