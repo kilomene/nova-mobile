@@ -123,7 +123,6 @@ namespace NovaMobile.Soldiers
         private readonly Dictionary<string, List<MeshRenderer>> _groups = new Dictionary<string, List<MeshRenderer>>();
         private readonly List<MeshRenderer> _headMeshes = new List<MeshRenderer>();
         private readonly List<MeshRenderer> _allRenderers = new List<MeshRenderer>();
-        private readonly List<MeshFilter> _variantMats = new List<MeshFilter>();
         private readonly Dictionary<MeshFilter, string> _matKey = new Dictionary<MeshFilter, string>();
         private Material _accentMat;
         private MeshRenderer _accentRenderer;

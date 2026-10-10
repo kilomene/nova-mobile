@@ -484,6 +484,7 @@ namespace NovaMobile.Squads
         int IClassBody.Armor { get { return Armor; } set { Armor = value; } }
         int IClassBody.MaxArmor { get { return MaxArmor; } }
         bool IClassBody.IsAlive { get { return !_dead; } }
+        bool IDamageable.IsAlive { get { return !_dead; } }
         bool IClassBody.IsPlayer { get { return false; } }
         bool IClassBody.IsSprinting
         {
@@ -517,6 +518,8 @@ namespace NovaMobile.Squads
         void IClassBody.AddAmmo(int amount) { /* bots use hitscan: no ammo economy */ }
 
         // ------------------------------------------------------------------ ITargetable
+        int ITargetable.SquadId { get { return SquadId; } }
+        string ITargetable.Callsign { get { return Callsign; } }
         Vector3 ITargetable.AimPosition
         {
             get { return transform.position + Vector3.up * 1.2f; }
