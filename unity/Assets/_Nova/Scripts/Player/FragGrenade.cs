@@ -66,7 +66,7 @@ namespace NovaMobile.Player
             g._exploded = false;
             g._visual.localScale = Vector3.one;
             Vector3 v = (dir + Vector3.up * 0.18f).normalized * power;
-            g._rb.velocity = v;
+            g._rb.linearVelocity = v;
             g._rb.angularVelocity = new Vector3(9f, 7f, 5f);
             g._rb.WakeUp();
             return g;
@@ -76,8 +76,8 @@ namespace NovaMobile.Player
         {
             _rb = GetComponent<Rigidbody>();
             _rb.mass = 0.4f;
-            _rb.drag = 0.05f;
-            _rb.angularDrag = 0.5f;
+            _rb.linearDamping = 0.05f;
+            _rb.angularDamping = 0.5f;
             _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
             var col = GetComponent<SphereCollider>();
@@ -117,11 +117,11 @@ namespace NovaMobile.Player
             if (_bounces >= MaxBounces)
             {
                 // Stop bouncing, roll to rest.
-                _rb.drag = 2.5f;
-                _rb.angularDrag = 4f;
+                _rb.linearDamping = 2.5f;
+                _rb.angularDamping = 4f;
             }
-            if (_rb.velocity.magnitude < 1.2f)
-                _rb.velocity = Vector3.zero;
+            if (_rb.linearVelocity.magnitude < 1.2f)
+                _rb.linearVelocity = Vector3.zero;
         }
 
         private void Update()

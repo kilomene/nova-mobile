@@ -38,14 +38,16 @@ namespace NovaMobile.Player
         public static Texture2D PanelNormal()
         {
             if (_panelNormal == null)
-                _panelNormal = MakeRoundedRect(PanelSize, new Color(1, 1, 1, 0.22f), Panel, radius: 44f, borderW: 5f);
+                _panelNormal = MakeRoundedRect(PanelSize, Panel,
+                    new Color(1, 1, 1, 0.22f), radius: 44, borderW: 5);
             return _panelNormal;
         }
 
         public static Texture2D PanelActive()
         {
             if (_panelActive == null)
-                _panelActive = MakeRoundedRect(PanelSize, Accent, Panel, radius: 44f, borderW: 8f);
+                _panelActive = MakeRoundedRect(PanelSize, Panel,
+                    Accent, radius: 44, borderW: 8);
             return _panelActive;
         }
 

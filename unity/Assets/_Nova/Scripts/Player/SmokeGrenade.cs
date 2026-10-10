@@ -63,7 +63,7 @@ namespace NovaMobile.Player
             g._landed = false;
             g._visual.gameObject.SetActive(true);
             Vector3 v = (dir + Vector3.up * 0.35f).normalized * power;
-            g._rb.velocity = v;
+            g._rb.linearVelocity = v;
             g._rb.angularVelocity = new Vector3(9f, 0f, 0f);
             g._rb.WakeUp();
             PurgeExpired();
@@ -129,7 +129,7 @@ namespace NovaMobile.Player
         {
             _rb = GetComponent<Rigidbody>();
             _rb.mass = 0.4f;
-            _rb.drag = 0.05f;
+            _rb.linearDamping = 0.05f;
             _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
             var col = GetComponent<SphereCollider>();
