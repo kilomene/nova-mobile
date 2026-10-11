@@ -188,7 +188,7 @@ namespace NovaMobile.Classes
             body.transform.SetParent(root.transform, false);
             body.transform.localScale = new Vector3(radius * 2f, height, radius * 2f);
             body.transform.localPosition = new Vector3(0f, height * 0.5f, 0f);
-            var bmat = new Material(Shader.Find("Standard"))
+            var bmat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"))
             {
                 color = new Color(0.16f, 0.17f, 0.19f),
             };

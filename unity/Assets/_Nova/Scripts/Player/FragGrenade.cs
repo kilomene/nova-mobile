@@ -93,7 +93,7 @@ namespace NovaMobile.Player
 
             if (_bodyMat == null)
             {
-                _bodyMat = new Material(Shader.Find("Standard"));
+                _bodyMat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
                 _bodyMat.color = new Color(0.20f, 0.28f, 0.16f);
                 _bodyMat.SetFloat("_Metallic", 0.35f);
                 _bodyMat.SetFloat("_Glossiness", 0.45f);

@@ -137,7 +137,7 @@ namespace NovaMobile.Vehicles
 
         private Material MakeMat(Color c, float metallic, float smooth, Color emission, float energy)
         {
-            var m = new Material(Shader.Find("Standard"));
+            var m = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             m.color = c;
             m.SetFloat("_Metallic", metallic);
             m.SetFloat("_Glossiness", smooth);
@@ -338,7 +338,7 @@ namespace NovaMobile.Vehicles
                     if (kv.Key == "accent_orange") _bodyRenderer = go.GetComponent<MeshRenderer>();
                 }
                 // Screen: own material instance (glows, flashes red when hit).
-                _screenMat = new Material(Shader.Find("Standard"));
+                _screenMat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
                 _screenMat.color = new Color(0.05f, 0.1f, 0.15f);
                 _screenMat.SetColor("_EmissionColor", new Color(0.2f, 0.7f, 1f) * 1.4f);
                 _screenMat.EnableKeyword("_EMISSION");

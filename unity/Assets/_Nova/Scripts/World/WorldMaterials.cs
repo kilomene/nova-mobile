@@ -40,8 +40,8 @@ namespace NovaMobile.World
             Shader lit = Shader.Find("Nova/VertexLit");
             Shader emissive = Shader.Find("Nova/Emissive");
             Shader water = Shader.Find("Nova/Water");
-            if (lit == null) lit = Shader.Find("Standard");
-            if (emissive == null) emissive = Shader.Find("Standard");
+            if (lit == null) lit = NovaMobile.Core.NovaMaterials.ResolveShader("Standard");
+            if (emissive == null) emissive = NovaMobile.Core.NovaMaterials.ResolveShader("Standard");
 
             int big = WorldQuality.TextureSize(256);
             int small = WorldQuality.TextureSize(128);

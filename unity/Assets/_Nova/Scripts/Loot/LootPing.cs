@@ -41,7 +41,7 @@ namespace NovaMobile.Loot
         private void Awake()
         {
             Color c = LootTable.RarityColor(Tier);
-            var unlit = new Material(Shader.Find("Unlit/Color") ?? Shader.Find("Standard"));
+            var unlit = new Material(Shader.Find("Unlit/Color") ?? NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             unlit.color = c;
 
             var dGo = new GameObject("Diamond");

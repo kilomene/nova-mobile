@@ -204,7 +204,7 @@ namespace NovaMobile.Economy
             var fus = GameObject.CreatePrimitive(PrimitiveType.Cube);
             fus.transform.SetParent(plane.transform, false);
             fus.transform.localScale = new Vector3(2f, 2f, 9f);
-            var fmat = new Material(Shader.Find("Standard"));
+            var fmat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             fmat.color = new Color(0.25f, 0.26f, 0.28f);
             fus.GetComponent<Renderer>().sharedMaterial = fmat;
             var wings = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -229,7 +229,7 @@ namespace NovaMobile.Economy
             var body = GameObject.CreatePrimitive(PrimitiveType.Cube);
             body.transform.SetParent(crate.transform, false);
             body.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
-            var cmat = new Material(Shader.Find("Standard"));
+            var cmat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             cmat.color = new Color(0.85f, 0.45f, 0.1f);
             cmat.EnableKeyword("_EMISSION");
             cmat.SetColor("_EmissionColor", new Color(0.85f, 0.45f, 0.1f) * 0.4f);
@@ -241,7 +241,7 @@ namespace NovaMobile.Economy
             chute.transform.SetParent(crate.transform, false);
             chute.transform.localScale = new Vector3(4.5f, 0.25f, 4.5f);
             chute.transform.localPosition = new Vector3(0, 3.2f, 0);
-            var chmat = new Material(Shader.Find("Standard"));
+            var chmat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             chmat.color = new Color(0.9f, 0.88f, 0.82f);
             chute.GetComponent<Renderer>().sharedMaterial = chmat;
 
@@ -307,7 +307,7 @@ namespace NovaMobile.Economy
                 var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 go.transform.position = p;
                 go.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-                var mat = new Material(Shader.Find("Standard"));
+                var mat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
                 mat.color = new Color(1.0f, 0.6f, 0.1f);
                 mat.EnableKeyword("_EMISSION");
                 mat.SetColor("_EmissionColor", new Color(1.0f, 0.6f, 0.1f) * 0.8f);

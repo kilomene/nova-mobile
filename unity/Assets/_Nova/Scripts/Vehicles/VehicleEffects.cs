@@ -89,7 +89,7 @@ namespace NovaMobile.Vehicles
             // Unit sphere mesh (local helper; build-time only).
             mf.mesh = BuildSphereMesh(1f, 12, 8);
             var mr = go.AddComponent<MeshRenderer>();
-            var flashMat = new Material(Shader.Find("Standard"));
+            var flashMat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             flashMat.color = new Color(1f, 0.55f, 0.15f, 0.85f);
             flashMat.SetColor("_EmissionColor", new Color(1f, 0.45f, 0.1f) * 3f);
             flashMat.EnableKeyword("_EMISSION");
@@ -288,7 +288,7 @@ namespace NovaMobile.Vehicles
             vel.enabled = true;
             vel.y = 3f;
             // Additive-ish: use a bright emissive particle material.
-            var mat = new Material(Shader.Find("Standard"));
+            var mat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             mat.SetColor("_EmissionColor", new Color(1f, 0.4f, 0.08f) * 2.5f);
             mat.EnableKeyword("_EMISSION");
             var pr = go.GetComponent<ParticleSystemRenderer>();

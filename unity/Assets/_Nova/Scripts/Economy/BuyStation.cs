@@ -139,13 +139,13 @@ namespace NovaMobile.Economy
 
         private void BuildKiosk()
         {
-            var dark = new Material(Shader.Find("Standard"));
+            var dark = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             dark.color = new Color(0.12f, 0.13f, 0.15f);
-            var accent = new Material(Shader.Find("Standard"));
+            var accent = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             accent.color = new Color(0.1f, 0.5f, 0.2f);
             accent.EnableKeyword("_EMISSION");
             accent.SetColor("_EmissionColor", new Color(0.1f, 0.9f, 0.3f) * 1.2f);
-            var screen = new Material(Shader.Find("Standard"));
+            var screen = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             screen.color = new Color(0.02f, 0.05f, 0.08f);
             screen.EnableKeyword("_EMISSION");
             screen.SetColor("_EmissionColor", new Color(0.2f, 0.8f, 1.0f) * 0.9f);

@@ -83,7 +83,7 @@ namespace NovaMobile.Mythics
         public static void Init()
         {
             if (_ready) return;
-            Shader psShader = Shader.Find("Particles/Standard Unlit");
+            Shader psShader = NovaMobile.Core.NovaMaterials.ResolveShader("Particles/Standard Unlit");
             if (psShader == null)
             {
                 Debug.LogError("[Mythics] Built-in particle shader missing; mythic FX disabled.");

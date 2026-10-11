@@ -229,7 +229,7 @@ namespace NovaMobile.Soldiers
 
         private static Material MakeMat(Color c, float rough, float metal)
         {
-            var m = new Material(Shader.Find("Standard"));
+            var m = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             m.color = c;
             m.SetFloat("_Glossiness", 1f - rough);
             m.SetFloat("_Metallic", metal);

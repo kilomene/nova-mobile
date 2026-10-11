@@ -9,7 +9,7 @@ Shader "Nova/Sky"
         _BottomColor ("Bottom Color", Color) = (0.32, 0.30, 0.27, 1)
         _SunDir ("Sun Direction", Vector) = (0.35, 0.45, -0.82, 0)
         _SunColor ("Sun Glow Color", Color) = (1.0, 0.88, 0.66, 1)
-        _SunSize ("Sun Disc Size", Range(0.0, 0.5)) = 0.08
+        _SunSize ("Sun Disc Size", Range(0.0, 0.5)) = 0.025
     }
     SubShader
     {

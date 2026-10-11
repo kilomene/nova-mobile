@@ -159,7 +159,7 @@ namespace NovaMobile.Squads
         {
             if (_flashMat == null)
             {
-                _flashMat = new Material(Shader.Find("Standard"));
+                _flashMat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
                 _flashMat.color = new Color(1f, 0.85f, 0.4f);
                 _flashMat.SetColor("_EmissionColor", new Color(1f, 0.7f, 0.2f) * 3f);
                 _flashMat.EnableKeyword("_EMISSION");

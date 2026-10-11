@@ -21,7 +21,7 @@ namespace NovaMobile.Loot
                 color.r, color.g, color.b, emission, metallic);
             Material m;
             if (MatCache.TryGetValue(key, out m)) return m;
-            Shader s = Shader.Find("Standard");
+            Shader s = NovaMobile.Core.NovaMaterials.ResolveShader("Standard");
             m = new Material(s);
             m.color = color;
             m.SetFloat("_Metallic", metallic);
@@ -41,7 +41,7 @@ namespace NovaMobile.Loot
             Material m;
             if (MatCache.TryGetValue(key, out m)) return m;
             Shader s = Shader.Find("Unlit/Color");
-            if (s == null) s = Shader.Find("Standard");
+            if (s == null) s = NovaMobile.Core.NovaMaterials.ResolveShader("Standard");
             m = new Material(s);
             m.color = color;
             MatCache[key] = m;
@@ -53,7 +53,7 @@ namespace NovaMobile.Loot
             string key = string.Format("t_{0:F2}_{1:F2}_{2:F2}_a{3:F2}", color.r, color.g, color.b, alpha);
             Material m;
             if (MatCache.TryGetValue(key, out m)) return m;
-            m = new Material(Shader.Find("Standard"));
+            m = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             m.SetFloat("_Mode", 3f);
             m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
             m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);

@@ -65,7 +65,7 @@ namespace NovaMobile.Arsenal
             Material m;
             if (_mats.TryGetValue(key, out m)) return m;
             MatDef d = DefOf(key);
-            m = new Material(Shader.Find("Standard"));
+            m = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             m.color = d.color;
             m.SetFloat("_Metallic", d.metallic);
             m.SetFloat("_Glossiness", d.smoothness);
@@ -112,7 +112,7 @@ namespace NovaMobile.Arsenal
             string key = c.ToString();
             Material m;
             if (_emissive.TryGetValue(key, out m)) return m;
-            m = new Material(Shader.Find("Standard"));
+            m = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             m.color = Color.black;
             m.EnableKeyword("_EMISSION");
             m.SetColor("_EmissionColor", c);

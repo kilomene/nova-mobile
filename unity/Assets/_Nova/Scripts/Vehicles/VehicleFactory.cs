@@ -94,7 +94,7 @@ namespace NovaMobile.Vehicles
         private static Material Make(Color color, float metallic, float smoothness,
             Color emission, float energy, bool transparent, Texture2D tex)
         {
-            var m = new Material(Shader.Find("Standard"));
+            var m = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             m.color = color;
             m.SetFloat("_Metallic", metallic);
             m.SetFloat("_Glossiness", smoothness);

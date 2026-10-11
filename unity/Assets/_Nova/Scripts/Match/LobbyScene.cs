@@ -104,7 +104,7 @@ namespace NovaMobile.Match
             ground.name = "Ground";
             ground.transform.SetParent(_sceneRoot.transform, false);
             ground.transform.localScale = new Vector3(7f, 1f, 7f);
-            var gmat = new Material(Shader.Find("Standard"));
+            var gmat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             gmat.mainTexture = ProcTexture.Dirt(256, 23);
             gmat.SetFloat("_Glossiness", 0f);
             ground.GetComponent<Renderer>().material = gmat;

@@ -81,10 +81,10 @@ namespace NovaMobile.Soldiers
             if (_gloveBox == null) _gloveBox = SoldierMeshes.Box(new Vector3(0.075f, 0.10f, 0.09f));
             if (_nadeMesh == null) _nadeMesh = SoldierMeshes.Sphere(0.035f);
 
-            _sleeveMat = new Material(Shader.Find("Standard"));
+            _sleeveMat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             _sleeveMat.color = new Color(0.26f, 0.28f, 0.18f);
             _sleeveMat.SetFloat("_Glossiness", 0.08f);
-            _gloveMat = new Material(Shader.Find("Standard"));
+            _gloveMat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             _gloveMat.color = new Color(0.12f, 0.11f, 0.09f);
             _gloveMat.SetFloat("_Glossiness", 0.3f);
 
@@ -93,7 +93,7 @@ namespace NovaMobile.Soldiers
             for (int i = 0; i < 2; i++)
                 _gloves[i] = MakePart("Glove" + i, _gloveBox, _gloveMat);
 
-            var nadeMat = new Material(Shader.Find("Standard"));
+            var nadeMat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             nadeMat.color = new Color(0.2f, 0.28f, 0.16f);
             nadeMat.SetFloat("_Glossiness", 0.4f);
             nadeMat.SetFloat("_Metallic", 0.3f);

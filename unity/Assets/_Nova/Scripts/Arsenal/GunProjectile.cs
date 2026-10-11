@@ -201,7 +201,7 @@ namespace NovaMobile.Arsenal
                 var mf = go.AddComponent<MeshFilter>();
                 mf.mesh = _puffMesh;
                 var mr = go.AddComponent<MeshRenderer>();
-                p._mat = new Material(Shader.Find("Standard"));
+                p._mat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
                 p._mat.SetFloat("_Mode", 3f);
                 p._mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 p._mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);

@@ -89,7 +89,7 @@ namespace NovaMobile.Arsenal
             var mf = ringGo.AddComponent<MeshFilter>();
             mf.mesh = BuildTorus(0.46f, 0.04f, 24, 10);
             var mr = ringGo.AddComponent<MeshRenderer>();
-            var rm = new Material(Shader.Find("Standard"));
+            var rm = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             rm.color = Color.black;
             rm.EnableKeyword("_EMISSION");
             mr.material = rm;
@@ -111,7 +111,7 @@ namespace NovaMobile.Arsenal
                     MeshBuilder.Cylinder(0.35f, 3f, 12, Matrix4x4.identity)
                 });
                 var mr = beamGo.AddComponent<MeshRenderer>();
-                var bm = new Material(Shader.Find("Standard"));
+                var bm = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
                 bm.SetFloat("_Mode", 3f);
                 bm.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 bm.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);

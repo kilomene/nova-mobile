@@ -83,7 +83,7 @@ namespace NovaMobile.Squads
         {
             if (_tagMat == null)
             {
-                _tagMat = new Material(Shader.Find("Standard"));
+                _tagMat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
                 _tagMat.color = new Color(1f, 0.8f, 0.25f);
                 _tagMat.SetFloat("_Metallic", 0.9f);
                 _tagMat.SetFloat("_Glossiness", 0.75f);

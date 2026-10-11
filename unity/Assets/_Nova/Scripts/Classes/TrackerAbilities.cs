@@ -74,7 +74,7 @@ namespace NovaMobile.Classes
             mi.transform.SetParent(go.transform, false);
             mi.transform.localScale = new Vector3(0.5f, 0.6f, 1.1f);
             mi.transform.localPosition = new Vector3(0f, 0.45f, 0f);
-            var mat = new Material(Shader.Find("Standard")) { color = new Color(0.15f, 0.16f, 0.18f) };
+            var mat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard")) { color = new Color(0.15f, 0.16f, 0.18f) };
             mat.SetColor("_EmissionColor", new Color(1f, 0.4f, 0.1f));
             mat.EnableKeyword("_EMISSION");
             mi.GetComponent<Renderer>().sharedMaterial = mat;

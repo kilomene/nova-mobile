@@ -79,7 +79,7 @@ namespace NovaMobile.Loot
 
         private static Material CMat(Color c, float rough = 0.65f, float metal = 0f, float emit = 0f)
         {
-            var m = new Material(Shader.Find("Standard"));
+            var m = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard"));
             m.color = c;
             m.SetFloat("_Metallic", metal);
             m.SetFloat("_Glossiness", 1f - rough);

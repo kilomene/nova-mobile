@@ -49,7 +49,7 @@ namespace NovaMobile.Classes
             mesh.transform.SetParent(_wall.transform, false);
             mesh.transform.localScale = new Vector3(3f, 2.2f, 0.25f);
             mesh.transform.localPosition = new Vector3(0f, 1.1f, 0f);
-            var mat = new Material(Shader.Find("Standard")) { color = new Color(0.2f, 0.24f, 0.3f) };
+            var mat = new Material(NovaMobile.Core.NovaMaterials.ResolveShader("Standard")) { color = new Color(0.2f, 0.24f, 0.3f) };
             mat.SetFloat("_Metallic", 0.4f);
             mesh.GetComponent<Renderer>().sharedMaterial = mat;
             var col = _wall.AddComponent<BoxCollider>();
