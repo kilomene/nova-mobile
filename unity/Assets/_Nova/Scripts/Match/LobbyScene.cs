@@ -84,28 +84,84 @@ namespace NovaMobile.Match
             _cam.transform.position = new Vector3(0f, 1.7f, 4.6f);
             _cam.transform.LookAt(new Vector3(0f, 1.05f, 0f));
             _cam.fieldOfView = 42f;
-            _cam.backgroundColor = new Color(0.55f, 0.74f, 0.92f, 1f); // hazy sky
-            _cam.clearFlags = CameraClearFlags.SolidColor;
+
+            // Golden-hour sky + distance haze (the approved lobby look).
+            Vector3 sunDir = new Vector3(0.45f, 0.38f, -0.81f).normalized;
+            SkyKit.ApplyGoldenHour(_cam, sunDir);
 
             var sun = new GameObject("Sun").AddComponent<Light>();
             sun.transform.SetParent(_sceneRoot.transform, false);
             sun.type = LightType.Directional;
-            sun.intensity = 1.15f;
-            sun.color = new Color(1f, 0.96f, 0.9f);
-            sun.transform.rotation = Quaternion.Euler(50f, -30f, 0f);
-            RenderSettings.ambientLight = new Color(0.55f, 0.6f, 0.68f);
+            sun.intensity = 1.35f;
+            sun.color = new Color(1f, 0.87f, 0.68f); // low warm sun
+            sun.transform.rotation = Quaternion.LookRotation(-sunDir);
+            sun.shadows = LightShadows.Soft;
+            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
+            RenderSettings.ambientLight = new Color(0.52f, 0.50f, 0.52f);
 
             // Ground: textured parade square.
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "Ground";
             ground.transform.SetParent(_sceneRoot.transform, false);
             ground.transform.localScale = new Vector3(7f, 1f, 7f);
-            var gmat = new Material(Shader.Find("Unlit/Texture"));
+            var gmat = new Material(Shader.Find("Standard"));
             gmat.mainTexture = ProcTexture.Dirt(256, 23);
+            gmat.SetFloat("_Glossiness", 0f);
             ground.GetComponent<Renderer>().material = gmat;
 
-            var concMat = new Material(Shader.Find("Unlit/Color"));
-            concMat.color = new Color(0.62f, 0.62f, 0.64f, 1f);
+            var concMat = NovaMaterials.Lit(new Color(0.62f, 0.62f, 0.64f, 1f));
+
+            // Hangar: open-ended shelter — roof slab on columns + low side walls.
+            // The Lagos skyline stays visible through the open ends (approved look).
+            var hangarMat = NovaMaterials.Lit(new Color(0.30f, 0.32f, 0.36f, 1f), 0.65f, 0.45f); // weathered steel
+            var roofMat = NovaMaterials.Lit(new Color(0.22f, 0.24f, 0.28f, 1f), 0.4f, 0.35f);
+            for (int i = 0; i < 4; i++)
+            {
+                float z = 6f - i * 6.5f;
+                foreach (float x in new float[] { -9f, 9f })
+                {
+                    var col = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    col.transform.SetParent(_sceneRoot.transform, false);
+                    col.transform.position = new Vector3(x, 3.75f, z);
+                    col.transform.localScale = new Vector3(0.7f, 7.5f, 0.7f);
+                    col.GetComponent<Renderer>().material = hangarMat;
+                }
+                var beam = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                beam.transform.SetParent(_sceneRoot.transform, false);
+                beam.transform.position = new Vector3(0f, 7.2f, z);
+                beam.transform.localScale = new Vector3(19f, 0.5f, 0.6f);
+                beam.GetComponent<Renderer>().material = hangarMat;
+            }
+            var roof = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            roof.transform.SetParent(_sceneRoot.transform, false);
+            roof.transform.position = new Vector3(0f, 7.7f, -3.5f);
+            roof.transform.localScale = new Vector3(20f, 0.4f, 28f);
+            roof.GetComponent<Renderer>().material = roofMat;
+            foreach (float x in new float[] { -9.6f, 9.6f })
+            {
+                var wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                wall.transform.SetParent(_sceneRoot.transform, false);
+                wall.transform.position = new Vector3(x, 1.1f, -3.5f);
+                wall.transform.localScale = new Vector3(0.5f, 2.2f, 27f);
+                wall.GetComponent<Renderer>().material = hangarMat;
+            }
+            // Warm interior work-lights.
+            var glowMat = NovaMaterials.Emissive(new Color(1f, 0.82f, 0.55f, 1f));
+            for (int i = 0; i < 3; i++)
+            {
+                var lamp = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                lamp.transform.SetParent(_sceneRoot.transform, false);
+                lamp.transform.position = new Vector3(0f, 7.0f, 4f - i * 7f);
+                lamp.transform.localScale = new Vector3(2.2f, 0.15f, 0.5f);
+                lamp.GetComponent<Renderer>().material = glowMat;
+                var pl = new GameObject("HangarLight" + i).AddComponent<Light>();
+                pl.transform.SetParent(_sceneRoot.transform, false);
+                pl.transform.position = new Vector3(0f, 6.2f, 4f - i * 7f);
+                pl.type = LightType.Point;
+                pl.color = new Color(1f, 0.80f, 0.55f);
+                pl.intensity = 1.6f;
+                pl.range = 14f;
+            }
 
             // Concrete barriers flanking the operator.
             for (int i = 0; i < 4; i++)
@@ -122,8 +178,7 @@ namespace NovaMobile.Match
             }
 
             // Tent: poles + slanted canopy, back-right.
-            var tentMat = new Material(Shader.Find("Unlit/Color"));
-            tentMat.color = new Color(0.42f, 0.44f, 0.36f, 1f);
+            var tentMat = NovaMaterials.Lit(new Color(0.42f, 0.44f, 0.36f, 1f));
             for (int i = 0; i < 4; i++)
             {
                 var pole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
@@ -150,8 +205,7 @@ namespace NovaMobile.Match
             catch (Exception e) { Debug.LogWarning("[LobbyScene] vehicle: " + e.Message); }
 
             // Ammo crates near the operator.
-            var crateMat = new Material(Shader.Find("Unlit/Color"));
-            crateMat.color = new Color(0.45f, 0.36f, 0.22f, 1f);
+            var crateMat = NovaMaterials.Lit(new Color(0.45f, 0.36f, 0.22f, 1f));
             for (int i = 0; i < 3; i++)
             {
                 var c = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -162,8 +216,7 @@ namespace NovaMobile.Match
             }
 
             // Distant building silhouettes for depth.
-            var bMat = new Material(Shader.Find("Unlit/Color"));
-            bMat.color = new Color(0.5f, 0.55f, 0.62f, 1f);
+            var bMat = NovaMaterials.Lit(new Color(0.5f, 0.55f, 0.62f, 1f));
             for (int i = 0; i < 5; i++)
             {
                 var b = GameObject.CreatePrimitive(PrimitiveType.Cube);

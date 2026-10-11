@@ -1,8 +1,13 @@
 using System;
 using UnityEngine;
+using NovaMobile.Arsenal;
 using NovaMobile.Classes;
+using NovaMobile.Loot;
 using NovaMobile.Player;
 using NovaMobile.Soldiers;
+using NovaMobile.Squads;
+using NovaMobile.Vehicles;
+using NovaMobile.World;
 
 namespace NovaMobile.Match
 {
@@ -42,6 +47,7 @@ namespace NovaMobile.Match
         private LobbyScene _lobby;
         private DropIn _dropIn;
         private Collapse _collapse;
+        private WorldBuilder _world;
         private bool _airdropWarned;
         private bool _airdropDone;
         private GameObject _touchMinimapMask; // legacy circular minimap, hidden during matches
@@ -127,6 +133,9 @@ namespace NovaMobile.Match
 
             EnsureHud();
             EnsurePlayer();
+            EnsureWorld();                    // build the 690x690 NOVA WORLD
+            LootSpawner.SpawnAll(_world);     // populate loot from world loot spots
+            EnsureSquads();                   // register player + spawn 25 squads
             HideTouchMinimap(); // visual bible: square Match minimap replaces the circular one
             Collapse.Ensure().Reset(); // fresh zone; begins on BeginCombat
             Minimap.Ensure(Hud);
@@ -169,6 +178,7 @@ namespace NovaMobile.Match
             if (_collapse != null) { _collapse.Stop(); }
             if (Minimap.Instance != null) Destroy(Minimap.Instance.gameObject);
             if (Player != null) { Destroy(Player.gameObject); Player = null; }
+            TeardownMatch(); // world, squads, loot, vehicles — replays start clean
             VictoryDefeat.Hide();
             AliveCount = StartAliveCount;
             ShowLobby();
@@ -300,6 +310,60 @@ namespace NovaMobile.Match
         private static SoldierVariant ToVariant(int v)
         {
             return v == 1 ? SoldierVariant.Breacher : SoldierVariant.Sentinel;
+        }
+
+        /// <summary>
+        /// Builds the NOVA WORLD (terrain, districts, roads, water) once per match.
+        /// WorldBuilder constructs everything in Awake().
+        /// </summary>
+        private void EnsureWorld()
+        {
+            if (_world == null)
+            {
+                _world = FindObjectOfType<WorldBuilder>();
+                if (_world == null)
+                {
+                    var go = new GameObject("NovaWorld");
+                    _world = go.AddComponent<WorldBuilder>();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Spawns the 100 combatants (player squad + 24 hostile squads).
+        /// Driven deterministically here instead of SquadManager's AutoSpawn so the
+        /// player is registered before the first bot is placed.
+        /// </summary>
+        private void EnsureSquads()
+        {
+            var squads = SquadManager.Instance;
+            if (squads == null)
+            {
+                var go = new GameObject("SquadManager");
+                squads = go.AddComponent<SquadManager>();
+                squads.AutoSpawn = false;
+            }
+            squads.RegisterPlayer(Player.gameObject);
+            squads.SpawnSquads();
+        }
+
+        /// <summary>
+        /// Destroys everything a match created so returning to the lobby and
+        /// starting again never stacks worlds, bots, loot, or vehicles.
+        /// </summary>
+        private void TeardownMatch()
+        {
+            if (SquadManager.Instance != null) Destroy(SquadManager.Instance.gameObject);
+            foreach (var bot in FindObjectsOfType<BotAgent>()) Destroy(bot.gameObject);
+            foreach (var mate in FindObjectsOfType<TeammateAI>()) Destroy(mate.gameObject);
+            foreach (var loot in FindObjectsOfType<LootPickup>()) Destroy(loot.gameObject);
+            foreach (var gun in FindObjectsOfType<GunPickup>()) Destroy(gun.gameObject);
+            foreach (var box in FindObjectsOfType<DeathBox>()) Destroy(box.gameObject);
+            foreach (var crate in FindObjectsOfType<SupplyCrate>()) Destroy(crate.gameObject);
+            foreach (var crate in FindObjectsOfType<AirdropCrate>()) Destroy(crate.gameObject);
+            foreach (var vehicle in FindObjectsOfType<VehicleController>()) Destroy(vehicle.gameObject);
+            foreach (var station in FindObjectsOfType<FuelStation>()) Destroy(station.gameObject);
+            if (_world != null) { Destroy(_world.gameObject); _world = null; }
         }
 
         private void RaisePhaseChanged()

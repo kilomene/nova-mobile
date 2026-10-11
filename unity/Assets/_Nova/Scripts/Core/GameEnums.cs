@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace NovaMobile.Core
 {
@@ -74,6 +75,27 @@ namespace NovaMobile.Core
             m.color = c;
             m.SetColor("_EmissionColor", c);
             m.EnableKeyword("_EMISSION");
+            return m;
+        }
+
+        private static readonly Dictionary<Color, Material> _lit =
+            new Dictionary<Color, Material>();
+
+        /// <summary>
+        /// Cached lit Standard material in a flat color (rough dielectric by
+        /// default; pass metallic/gloss for steel). Environments that want to
+        /// respond to scene lighting should use this instead of Unlit/Color.
+        /// </summary>
+        public static Material Lit(Color c, float metallic = 0f, float gloss = 0.2f)
+        {
+            if (!_lit.TryGetValue(c, out var m))
+            {
+                m = new Material(Shader.Find("Standard"));
+                m.color = c;
+                m.SetFloat("_Metallic", metallic);
+                m.SetFloat("_Glossiness", gloss);
+                _lit[c] = m;
+            }
             return m;
         }
     }

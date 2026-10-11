@@ -1,4 +1,5 @@
 using UnityEngine;
+using NovaMobile.Core;
 
 namespace NovaMobile.World
 {
@@ -51,8 +52,17 @@ namespace NovaMobile.World
             Camera cam = Camera.main;
             if (cam != null)
             {
-                cam.clearFlags = CameraClearFlags.SolidColor;
-                cam.backgroundColor = SkyColor;
+                // Gradient sky with the sun placed where this light says it is.
+                Vector3 toSun = -(transform.rotation * Vector3.forward);
+                SkyKit.ApplyMidday(cam, toSun.normalized);
+            }
+            else
+            {
+                RenderSettings.fog = true;
+                RenderSettings.fogMode = FogMode.Linear;
+                RenderSettings.fogColor = new Color(0.74f, 0.82f, 0.90f);
+                RenderSettings.fogStartDistance = 120f;
+                RenderSettings.fogEndDistance = 700f;
             }
             Shader.SetGlobalColor("_NovaAmbient", AmbientColor);
         }

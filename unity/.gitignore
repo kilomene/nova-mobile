@@ -1,17 +1,14 @@
-# Unity generated — never commit
-Library/
-Temp/
-Obj/
-Build/
-Builds/
-Logs/
-UserSettings/
-MemoryCaptures/
-# OS
-.DS_Store
-Thumbs.db
-# Rider/VS
-.idea/
-.vscode/
-*.csproj
-*.sln
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+.vs/
+*.pidb.meta
+*.pdb.meta
+sysinfo.txt
+*.apk
+*.aab

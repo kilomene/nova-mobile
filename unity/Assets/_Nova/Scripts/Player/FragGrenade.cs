@@ -82,10 +82,10 @@ namespace NovaMobile.Player
 
             var col = GetComponent<SphereCollider>();
             col.radius = 0.06f;
-            var phys = new PhysicsMaterial("FragBounce")
+            var phys = new PhysicMaterial("FragBounce")
             {
                 bounciness = 0.45f,
-                bounceCombine = PhysicsMaterialCombine.Maximum,
+                bounceCombine = PhysicMaterialCombine.Maximum,
                 dynamicFriction = 0.4f,
                 staticFriction = 0.4f
             };

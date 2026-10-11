@@ -3,9 +3,9 @@
 --- !u!1045 &1
 EditorBuildSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
+  serializedVersion: 1
   m_Scenes:
   - enabled: 1
     path: Assets/_Nova/Scenes/Bootstrap.unity
-    guid: 36b767de01b317d7c837d55be18011e6
+    guid: 1d42cf353603425c98f7a631d754f5df
   m_configObjects: {}
